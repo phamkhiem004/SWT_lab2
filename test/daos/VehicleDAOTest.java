@@ -94,7 +94,17 @@ public class VehicleDAOTest {
     }
 
     @Test
-    public void testToggleVehicleStatus() {
+    public void testToggleVehicleStatus() throws Exception {
+        int vehicleId = 1;  // ID của xe cần thay đổi trạng thái
+
+        // Act: Gọi phương thức toggleVehicleStatus để thay đổi trạng thái xe
+        vehicleDAO.toggleVehicleStatus(vehicleId);
+
+        // Assert: Kiểm tra các phương thức được gọi đúng cách
+        verify(mockConnection).prepareStatement(anyString());  // Kiểm tra chuẩn bị câu lệnh SQL
+        verify(mockPreparedStatement).setInt(1, vehicleId);  // Kiểm tra việc truyền VehicleId
+        verify(mockPreparedStatement).executeUpdate();  // Kiểm tra thực thi câu lệnh SQL
+        verify(mockPreparedStatement).close();  // Kiểm tra đóng PreparedStatement
     }
 
     @Test
